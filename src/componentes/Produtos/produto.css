@@ -1,0 +1,111 @@
+  /*.adicionar_produto {
+    background: #00264B ;
+    color: white;
+    
+    border-width: 10pt;
+    border-style: solid;
+    border-width: 3px;
+
+
+
+}
+.produto{
+  background: white;
+  background-color: aqua;
+  
+  border-style: solid;
+  border-width: 3px;
+
+}
+
+.container {
+
+   background-color: blueviolet;
+}*/
+.P{
+text-align: left;
+width: 345px;
+height: 47px;
+margin-left: 120px;
+top: 177px;
+color: #000000;
+font-size: 40px;
+font-weight: bold;
+
+
+}
+
+.subheader {
+  color: red;
+  background-color: #e9e1e1;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+
+
+
+}
+
+
+.Add{
+  color: #0F4C81;
+  width: 291px;
+  height: 64px;
+  right: 261px;
+  top: 164px;
+  margin-right: 100px;
+
+}
+
+
+.lista{
+margin:10px;
+flex-direction: left;
+font-style: normal;
+font-weight: bold;
+font-size: 10px;
+line-height: 20px;
+flex-wrap: wrap;
+display: flex;
+padding-left: 50px;
+
+align-content: center;
+justify-content: flex-start;
+
+font-family: Raleway;
+
+}
+
+.img{
+  display: flex;
+  flex-direction: left;
+  width: 109px;
+  height: 139px;
+  justify-content: flex-start;
+  align-content: center;
+}
+
+.descricao{
+  padding-left: 50px;
+  
+
+}
+
+.nome{
+
+
+  font-family: Raleway;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+color: #353535;
+}
+
+.img2{
+  padding-left: 100px;
+  
+
+
+}
