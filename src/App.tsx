@@ -48,7 +48,7 @@ function App() {
     </div>  
        <div>  
         <BrowserRouter>
-            <Navegacao/>
+           
             <CustomRoutes/>
           {/*<h1 className="container"> fazer container </h1> */}
        </BrowserRouter>
