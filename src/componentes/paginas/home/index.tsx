@@ -1,4 +1,5 @@
 import { AxiosResponse } from "axios"
+import { ProdutoDTO } from "dtos/ProdutoDTO"
 import React, { useEffect, useState } from "react"
 import { NodeAPI } from "services/Service"
 import Produto from "../../Produtos/index"
@@ -11,14 +12,18 @@ import "./home.css"
 
 function Home (){
 
-  const [produtos, setProdutos] = useState<Array<any>>([])
+  const [produtos, setProdutos] = useState<Array<ProdutoDTO>>([])
 
   useEffect (()=> {
    const getProduto = async () => {
     try {
-      const postResponse: AxiosResponse = await NodeAPI.get (
+      const getResponse: AxiosResponse = await NodeAPI.get (
         `${process.env.REACT_APP_API_URL}/produto` );
-        setProdutos(postResponse.data)
+        setProdutos(getResponse.data)
+        console.log(getResponse.data)
+          
+        
+          
   }catch(error){
        console.log(error);
 
@@ -31,19 +36,26 @@ function Home (){
   
   console.log(produtos)
 
+ 
   return (
     <>
-    <div>
-    <div className='subheader'>
+      <div>
+        <div className='subheader' >
           <h1 className='P'>Produto</h1>
-          <button className='Add' onClick={()=>{window.location.replace('/addprodutos')}}> Adicionar Produto </button>
-         </div>
-       {produtos.map(it => <Produto nome={it.nome} marca={it.id_marca} />)}
-    
-    {/*      <Img_produto/> */}
-    </div>
+             <button className='Add' onClick={()=>{window.location.replace('/addprodutos')}}> Adicionar Produto </button>
+
+
+
+        </div>
+            {produtos.map((it, index) => <Produto key={index} produtoDTO={it} />)} 
+            
+      </div>
+     
     </>
     )
     
   }
+
   export default Home;
+
+  

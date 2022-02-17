@@ -21,7 +21,7 @@
 .container {
 
    background-color: blueviolet;
-}*/
+}
 .P{
 text-align: left;
 width: 345px;
@@ -84,28 +84,74 @@ font-family: Raleway;
   height: 139px;
   justify-content: flex-start;
   align-content: center;
-}
+}*/
 
-.descricao{
-  padding-left: 50px;
+.img {
+  width: 124px;
+  height: 186px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  }
   
+  .img img{
+      height: 100%;
+      width: 100%;
+      z-index:0;
+      object-fit: contain;
+  }
+  
+  .content-product{
+      display:flex;
+      flex-direction: row;
+  
+  }
+  
+  .details{
+      justify-content: start;
+      display: flex;
+      flex-direction: column;
+      flex:1;
+  }
 
-}
-
-.nome{
-
-
+  .details .valor {
+      font-family: Raleway;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 120%;
+  /* or 38px */
+  
+  font-feature-settings: 'pnum' on, 'lnum' on;
+  
+  /* Blue 2 */
+  
+  color: #0F4C81;
+  }
+  .details .camera {
+      font-family: Raleway;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+  
+  /* Cinza */
+  
+  color: #353535;
+  }
+  .action{
+      width:200px;
+      left: 1394px;
+  }
+  
+  
+  .camera {
   font-family: Raleway;
   font-style: normal;
   font-weight: bold;
   font-size: 24px;
   line-height: 28px;
-color: #353535;
-}
-
-.img2{
-  padding-left: 100px;
-  
-
-
-}
+  font-feature-settings: 'pnum' on, 'lnum' on;
+  }

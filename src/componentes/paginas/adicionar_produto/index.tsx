@@ -1,210 +1,246 @@
 import React, { useRef, useState } from "react";
-//import {Link} from "react-router-dom"
 import  './add.css'
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Alert, Button, IconButton, Input, Snackbar, SvgIcon } from "@mui/material";
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+
 import { AxiosResponse } from "axios";
 import { NodeAPI } from "services/Service";
 import { ProdutoDTO } from "dtos/ProdutoDTO";
-import { blue } from "@mui/material/colors";
-import CustomRoutes from "componentes/routes";
-import { BrowserRouter } from "react-router-dom";
 import Navegacao from "../navegacao";
 
 
-//import CustomRoutes from "../../routes";
 
-function Adicionar_produto (){
-
+export function AdicionarProduto (){
+    const uploadfile:any = useRef();
+        
     const [nome, setNome] = useState<string>('');
     const [id_cor, setIdcor] = useState<Number>(0);
     const [id_marca, setIdmarca] = useState<Number>(0);
     const [valor, setValor] = useState<Number>(0);
     const [imagem, setImagem] = useState<string>('');
+    
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [severity, setSeverity] = useState<'success' | 'info' | 'warning' | 'error'>('success');
+    const [feedbackMessage, setFeedbackMessage] = useState<string>('');
 
 
 
-
-
-   // const [isOpen, setIsOpen] = useState<boolean>(false);
-
-
-
-
-
-   async function createProdutoHandler(){
+async function createProdutoHandler(){
      const produtoDTO = new ProdutoDTO(nome, id_cor, id_marca, valor, imagem);
-
+       console.log(produtoDTO)
      try {
          const postResponse: AxiosResponse = await NodeAPI.post (
            `${process.env.REACT_APP_API_URL}/produto`, produtoDTO );
+
+           setFeedbackMessage("Produto cadastrado com sucesso!")
+           setSeverity('success')
+           setIsOpen(true)
+           setNome('')
+           setIdcor(Number(''))
+           setIdmarca(Number(''))
+           setValor(Number(''))
+
            console.log(postResponse);
-           window.location.replace('/home')
+         //  window.location.replace('/home')
      }catch(error){
-          console.log(error);
-
+      setFeedbackMessage("Produto não cadastrado!")
+      setSeverity('error');
+      setIsOpen(true);
+      console.log(error);
      }
-
-    
-
-   } 
-
-//useEffect(() => {
- 
-//} , []);*/
+ } 
 
 
 
+   function closeSnackbar(){
+      setIsOpen(false)
+    }
+   
+//botao uploud
+function openFileExplorer (){
+    uploadfile.current.click();
+      }
 
 
-
-    
-    return(
-        <>
+  function handlefile(event: any){
+        parseFileBase64(event.target.files[0])
         
-        
-        <div 
-           style={{
-             backgroundColor: 'blue',
-             height: '500px',
-             display: 'flex',
-             justifyContent: 'center',
-             alignItems: 'center'
-             }}
-          > <div style={{backgroundColor: "green", justifyContent: 'start'}}> {<Navegacao />}</div>
+    }
+
+  function parseFileBase64(file: File){
+        file.text().then(()=> {
+            let reader: FileReader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onloadend = () => {
+                const document: string | ArrayBuffer | null = reader.result;
+                  if (typeof document === 'string'){
+                  setImagem(
+                    document.slice(document.lastIndexOf(',') +1, document.length)
+                    );
+                console.log(
+                document.slice(document.lastIndexOf(',') +1, document.length)
+                );
+              }
+            };
+        });
+   }
+
+
+return(
+          
+      <>
+      
+          <div> 
+          
+          <div 
+          style={{
             
-             <div style={{ 
+            height: '500px',
+            display: 'flex',
+            justifyContent: 'left',
+            alignItems: 'left',
+            flexDirection: 'column',
+            
+            }}
+          >
+              <div style={{
+                          justifyContent: 'start',
+                          marginBottom: "15px", 
+                          }}> {<Navegacao />}</div>
+            
+            <div style={{ 
                         height: '90%', 
                         width: '45%', 
                         display: 'flex', 
-                        justifyContent: 'center',
-                        backgroundColor: 'red'
+                        justifyContent: 'start',
+                        
                         }}
                         >
 
-                 <div style={{width: '100%'}}>
+                <div style={{width: '100%'}}>
                     <div 
                       style={{
                         marginBottom: "15px",
                         width: '100%', 
                         display: 'flex',
-                        justifyContent: "center",
-                       }}
+                        justifyContent: "start",
+                      }}
                         >
 
                         <TextField
-                           onChange={(event) => setNome(event.target.value)}
-                           label={'Nome do Produto'}
-                           variant='outlined'
-                               style={{ width: "50%", backgroundColor: 'white', }}             
+                          value = {nome}
+                          onChange={(event) => setNome(event.target.value)}
+                          label={'Nome do Produto'}
+                          variant='outlined'
+                              style={{ width: "70%", backgroundColor: 'white', }}             
                         /> 
                   </div>
                   
-                   <div style={{marginBottom: "15px", 
+                  <div style={{marginBottom: "15px", 
                                 display: 'flex',
-                                justifyContent: "center"
+                                justifyContent: "start"
                   
                   
                         }}
-                         > 
+                        > 
                     <TextField
-                     label={'Marca'}
-                     type='number'
-                     variant='outlined'
+                    value={id_marca}
+                    label={'Marca'}
+                    type='number'
+                    variant='outlined'
                     onChange={(event) => setIdmarca(Number(event.target.value))}
-                       style={{ width: '50%', backgroundColor: 'white',}}             
+                      style={{ width: '70%', backgroundColor: 'white',}}             
                     /> 
                 
-             </div>
+            </div>
             <div style={{marginBottom: "15px",
-                         display: 'flex',
-                         justifyContent: "center"
-                         }}
+                        display: 'flex',
+                        justifyContent: "start"
+                        }}
             >
                     <TextField
+                    
                       label={'Valor'}
                       variant='outlined'
-                      type="Valor"
+                      type="number"
                       onChange={(event) => setValor(Number(event.target.value))}
-                       style={{ width: "50%", backgroundColor: 'white',}}             
+                      style={{ width: "70%", backgroundColor: 'white',}}             
                     /> 
             </div>
             <div style={{marginBottom: "15px",
-                         display: 'flex',
-                         justifyContent: "center"
-                         }}
+                        display: 'flex',
+                        justifyContent: "start"
+                        }}
             >
                     <TextField
+                    value={id_cor}
                       label={'Cor'}
                       variant='outlined'
                       type="number"
                       onChange={(event) => setIdcor(Number(event.target.value))}
-                       style={{ width: "50%", backgroundColor: 'white',}}             
+                      style={{ width: "70%", backgroundColor: 'white',}}             
                     /> 
             </div>
             <div>
 
-            <label htmlFor="icon-button-file">
-            <input accept="image/*" id="icon-button-file" type="file" />
-                <IconButton color="primary" 
-                            aria-label="upload picture" 
-                            
-                           component="span"
-                           onChange={(event) => setImagem(event.target.value)}
-                           
-                           > 
-                <AddPhotoAlternateIcon />
-              </IconButton>
-            </label>
+              <div style={
+                {width:"100%", height: '150px'}}>
+                <input  
+                ref={uploadfile} 
+                style={{display: "none"}}
+                type="file" 
+                onChange={handlefile}
+                
+               />
+                 <img src={`data:image/png;base64,${imagem}`} alt="" /> 
+              <Button onClick={openFileExplorer} variant='outlined'>
+                      Abrir explorer
+              </Button>
+              </div>
                                         
             </div>
 
-             <div style={{display: 'flex', justifyContent: 'center'}}>
+            <div style={{display: 'flex', justifyContent: 'start'}}>
                 <Button 
                     variant={'contained'}
                     style= {{
                       height: '50px', 
-                      width: '100px', }}
-                     onClick={createProdutoHandler}
+                      width: '300px', }}
+                    onClick={createProdutoHandler}
+                   
                 >
-                     {"Criar"}    
+                    {"Adicionar Produto"}    
                 </Button>
             </div>
             
-            
-            
-           </div>
+                   
+          </div>
 
 
           </div>
           <Snackbar 
             anchorOrigin={{vertical:'top', horizontal: 'right'}}
-            open={true}
+            open={isOpen}
             autoHideDuration={6000}
-            onClose={()=>{}}
+            onClose={closeSnackbar}
           >
-             <Alert onClose={()=>{}} severity="success" sx={{ width: '100%' }}>
-                This is a success message!
-             </Alert>
+            <Alert onClose={closeSnackbar}
+              severity={severity}
+              sx={{ width: '100%' }}>
+                  {feedbackMessage}
+            </Alert>
           </Snackbar>
         </div>
-   
+  
+          
+          </div>
+      
+        
     </>
-     
-   );
     
-   
-    
-    
-    
-    
-    
-    
-    
+  );
 }
-export default Adicionar_produto;
+
 
 
 
