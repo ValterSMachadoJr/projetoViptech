@@ -18,6 +18,7 @@ export function AdicionarProduto (){
     const [id_marca, setIdmarca] = useState<Number>(0);
     const [valor, setValor] = useState<Number>(0);
     const [imagem, setImagem] = useState<string>('');
+    const [data_cadastro, SetDataCadastro] = useState<Date>(new Date);
     
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [severity, setSeverity] = useState<'success' | 'info' | 'warning' | 'error'>('success');

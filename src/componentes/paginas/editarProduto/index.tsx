@@ -7,7 +7,7 @@ import { AxiosResponse } from "axios";
 import { NodeAPI } from "services/Service";
 import { ProdutoDTO } from "dtos/ProdutoDTO";
 import Navegacao from "../navegacao";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 
@@ -15,12 +15,14 @@ export function EditarProduto (){
 
    
    const uploadfile:any = useRef();  
+  // const navigate = useNavigate(); nao estou retornando para o página home
 
     const [nome, setNome] = useState<string>('');
     const [id_cor, setIdcor] = useState<Number>(0);
     const [id_marca, setIdmarca] = useState<Number>(0);
     const [valor, setValor] = useState<Number>(0);
     const [imagem, setImagem] = useState<string>('');
+
     const {id_produto} = useParams();
     
 
@@ -35,7 +37,7 @@ async function EditarprodutoById(){
      const editarProduto = new ProdutoDTO(nome, id_cor, id_marca, valor, imagem, Number(id_produto));
        
      try {
-         await NodeAPI.put (
+         await NodeAPI.put(
            `${process.env.REACT_APP_API_URL}/produto/${id_produto}`,
            editarProduto);
 
@@ -46,6 +48,8 @@ async function EditarprodutoById(){
            setIdcor(Number(''))
            setIdmarca(Number(''))
            setValor(Number(''))
+    //       navigate('/home') voltaria a página home
+
 
            
          //  window.location.replace('/home')
@@ -67,7 +71,9 @@ async function getProdutoById(){
       setIdcor(resposta.data.id_cor)
       setIdmarca(resposta.data.id_marca)
       setValor(resposta.data.valor)
-
+      console.log(resposta)
+    //  setImagem(resposta.data.(`${"data:image/jpeg;base64,"} + ${imagem}`)
+      setImagem(resposta.data.imagem)
     } catch (erro){
          console.log(erro);
 
@@ -196,7 +202,7 @@ return(
                         }}
             >
                     <TextField
-                    
+                      value={valor}
                       label={'Valor'}
                       variant='outlined'
                       type="number"
@@ -218,6 +224,22 @@ return(
                       style={{ width: "70%", backgroundColor: 'white',}}             
                     /> 
             </div>
+
+            <div>
+               <TextField   
+                value={imagem}
+                label={'imagem'}
+                variant="outlined"
+              
+
+                />
+            </div>
+
+
+
+
+
+
             <div>
 
               <div style={
@@ -246,7 +268,7 @@ return(
                     onClick={EditarprodutoById}
                    
                 >
-                    {"Adicionar Produto"}    
+                    {"SALVAR PRODUTO"}    
                 </Button>
             </div>
             

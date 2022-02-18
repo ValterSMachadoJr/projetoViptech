@@ -1,7 +1,10 @@
+
 import { Button, IconButton } from '@mui/material';
+import Home from 'componentes/paginas/home';
 import { ProdutoDTO } from 'dtos/ProdutoDTO';
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { NodeAPI } from 'services/Service';
 import './produto.css';
 
 type ProdutoProps = {
@@ -13,7 +16,28 @@ produtoDTO:ProdutoDTO;
 export default function Produto (props:ProdutoProps) {
       const {produtoDTO} = props 
       
-      return (
+     
+
+
+
+
+
+
+async function deletarProdutoById(){
+     try {
+
+ await NodeAPI.delete(`${process.env.REACT_APP_API_URL}/produto/${produtoDTO.id_produto}`);
+       alert("produto excluido");
+     
+         } catch (erro){
+              console.log(erro);
+              
+         }
+     
+     }
+
+
+return (
          
          <>
          
@@ -36,14 +60,16 @@ export default function Produto (props:ProdutoProps) {
             <div className="actions">
 
             
-           <IconButton aria-label="editar produto"></IconButton>
+           <IconButton aria-label="carrinho"></IconButton>
+           <Button variant="outlined"onClick={()=>{window.location.replace('/carrinho')}}><img src='carrinho8.png' alt="" />
+            </Button>
+            <IconButton aria-label="editar"></IconButton>
            <Button variant="outlined"onClick={()=>{window.location.replace('/editproduto/'+produtoDTO.id_produto)}}><img src='Edit.png' alt="" />
             </Button>
             <IconButton aria-label="delete"></IconButton>
-           <Button variant="outlined"onClick={()=>{window.location.replace('/editar_produto')}}><img src='carrinho1' alt="" />
-            </Button>
-            <IconButton aria-label="delete"></IconButton>
-           <Button variant="outlined"onClick={()=>{window.location.replace('/deletarproduto')}}><img src='Delete.png' alt="" />
+           <Button variant="outlined"onClick={deletarProdutoById}>    
+                        
+              <img src='Delete.png' alt="" />
             </Button>
 
 
