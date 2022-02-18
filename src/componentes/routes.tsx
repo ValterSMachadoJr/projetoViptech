@@ -19,7 +19,7 @@ const CustomRoutes = () => {
           <Route index element={<Home/>} />
           <Route path="/addprodutos" element={<AdicionarProduto/>}/>
           <Route path="/editproduto/:id_produto" element={<EditarProduto/>}/>
-          <Route path="/carrinho/" element={<Carrinho/>}/>
+          <Route path="/carrinho/:id_produto" element={<Carrinho/>}/>
          </Routes>
     // </BrowserRouter> 
    )

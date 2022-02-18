@@ -149,7 +149,9 @@ return(
               <div style={{
                           justifyContent: 'start',
                           marginBottom: "15px", 
-                          }}> {<Navegacao />}</div>
+                          }}>
+                            
+                             {<Navegacao />}</div>
             
             <div style={{ 
                         height: '90%', 
@@ -251,7 +253,7 @@ return(
                 onChange={handlefile}
                 
                />
-                 <img src={`data:image/png;base64,${imagem}`} alt="" /> 
+                 <img src={`data:image/png;base64,${imagem}`} alt="" style={{objectFit: "cover"}}/> 
               <Button onClick={openFileExplorer} variant='outlined'>
                       Abrir explorer
               </Button>

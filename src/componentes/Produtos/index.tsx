@@ -4,6 +4,7 @@ import Home from 'componentes/paginas/home';
 import { ProdutoDTO } from 'dtos/ProdutoDTO';
 
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { NodeAPI } from 'services/Service';
 import './produto.css';
 
@@ -18,7 +19,7 @@ export default function Produto (props:ProdutoProps) {
       
      
 
-
+const navigate = useNavigate();
 
 
 
@@ -28,9 +29,12 @@ async function deletarProdutoById(){
 
  await NodeAPI.delete(`${process.env.REACT_APP_API_URL}/produto/${produtoDTO.id_produto}`);
        alert("produto excluido");
+      // navigate('/home'
+      window.location.replace('/home')
      
          } catch (erro){
               console.log(erro);
+              
               
          }
      
@@ -61,7 +65,7 @@ return (
 
             
            <IconButton aria-label="carrinho"></IconButton>
-           <Button variant="outlined"onClick={()=>{window.location.replace('/carrinho')}}><img src='carrinho8.png' alt="" />
+           <Button variant="outlined"onClick={()=>{window.location.replace('/carrinho/'+produtoDTO.id_produto)}}><img src='carrinho8.png' alt="" />
             </Button>
             <IconButton aria-label="editar"></IconButton>
            <Button variant="outlined"onClick={()=>{window.location.replace('/editproduto/'+produtoDTO.id_produto)}}><img src='Edit.png' alt="" />

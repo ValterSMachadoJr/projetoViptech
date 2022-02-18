@@ -7,6 +7,10 @@ import { AxiosResponse } from "axios";
 import { NodeAPI } from "services/Service";
 import { ProdutoDTO } from "dtos/ProdutoDTO";
 import Navegacao from "../navegacao";
+import { DisabledByDefault } from "@mui/icons-material";
+import { timeStamp } from "console";
+import moment from 'moment';
+import 'moment/locale/pt-br';
 
 
 
@@ -18,7 +22,7 @@ export function AdicionarProduto (){
     const [id_marca, setIdmarca] = useState<Number>(0);
     const [valor, setValor] = useState<Number>(0);
     const [imagem, setImagem] = useState<string>('');
-    const [data_cadastro, SetDataCadastro] = useState<Date>(new Date);
+   const [data_cadastro, SetDataCadastro] = useState<string>(moment().format('L'));
     
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [severity, setSeverity] = useState<'success' | 'info' | 'warning' | 'error'>('success');
@@ -107,7 +111,7 @@ return(
               <div style={{
                           justifyContent: 'start',
                           marginBottom: "15px", 
-                          }}> {<Navegacao />}</div>
+                          }}> {<Navegacao/>}</div>
             
             <div style={{ 
                         height: '90%', 
@@ -160,7 +164,8 @@ return(
                         }}
             >
                     <TextField
-                    
+                    //  value={currency}
+                     // value: moment().format('l');
                       label={'Valor'}
                       variant='outlined'
                       type="number"
@@ -182,16 +187,39 @@ return(
                       style={{ width: "70%", backgroundColor: 'white',}}             
                     /> 
             </div>
+
+             
+            <div style={{marginBottom: "15px",
+                        display: 'flex',
+                        justifyContent: "start"
+                        }}
+            >
+                    <TextField
+                    value={data_cadastro}
+                   // defaultValue={new Date}
+                     disabled
+                     onChange={(event) => SetDataCadastro(event.target.value)}
+                      label={'Data Cadastro'}
+                     variant='outlined'
+                      
+                      
+                      style={{ width: "70%", backgroundColor: 'white',}}             
+                    /> 
+            </div>
+            
+
+
             <div>
 
               <div style={
-                {width:"100%", height: '150px'}}>
+                {width:"100%", height: '150px'}}
+                >
                 <input  
                 ref={uploadfile} 
                 style={{display: "none"}}
                 type="file" 
                 onChange={handlefile}
-                
+               
                />
                  <img src={`data:image/png;base64,${imagem}`} alt="" /> 
               <Button onClick={openFileExplorer} variant='outlined'>
