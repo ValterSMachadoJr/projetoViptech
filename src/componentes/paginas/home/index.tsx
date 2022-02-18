@@ -41,9 +41,9 @@ function Home (){
   return (
     <>
       <div>
-        <div style={{display: "flex"}} className='subheader' >
+        <div style={{display: "flex", justifyContent: "space-around"}} className='subheader' >
           <h1 className='P'>Produto</h1>
-             <button className='Add' style= {{ justifyItems: "right" }}  onClick={()=>{window.location.replace('/addprodutos')}}> Adicionar Produto </button>
+           <button className='Add' style= {{ justifyItems: "right" }}  onClick={()=>{window.location.replace('/addprodutos')}}> Adicionar Produto </button>
         </div>
             {produtos.map((it, index) => <Produto key={index} produtoDTO={it} />)} 
             

@@ -64,11 +64,11 @@ export default function Carrinho() {
           <div className='carrinho'>
               <h1>Carrinho</h1>
             
-              <div><img alt='' style={{position: "absolute", zIndex: "100", backgroundColor: "blue"}}className='camera' src={`data:image/png;base,${imagem}`}></img></div>
+              <div><img alt='' style={{backgroundColor: "blue", marginTop: '32px', marginLeft: '35px'}}className='camera' src={`data:image/png;base64,${imagem}`}></img></div>
               
                
                   <TextField
-                          value = {`data:image/png;base,${imagem}`}
+                          value = {nome}
                           onChange={(event) => setNome(event.target.value)}
                           label={'Nome do Produto'}
                           variant='outlined'
