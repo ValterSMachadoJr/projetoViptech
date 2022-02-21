@@ -11,18 +11,19 @@ import Home from "./paginas/home/index";
 //'{ exact: true; path: string; element: Element; }
 
 const CustomRoutes = () => {
-   return(
-      //<BrowserRouter>
-         <Routes>
-         { /* <Route path="/" element={<>{"Projeto React"}</>} /> */ }
-          <Route path="/home" element={<Home />} />
-          <Route index element={<Home/>} />
-          <Route path="/addprodutos" element={<AdicionarProduto/>}/>
-          <Route path="/editproduto/:id_produto" element={<EditarProduto/>}/>
-          <Route path="/carrinho/:id_produto" element={<Carrinho/>}/>
-         </Routes>
-    // </BrowserRouter> 
-   )
-}
+  return (
+    //<BrowserRouter>
+    <Routes>
+      <Route path="/home" element={<Home />} />
+      <Route index element={<Home />} />
+      <Route path="/addprodutos" element={<AdicionarProduto />} />
+      <Route path="/editproduto/:id_produto" element={<EditarProduto />} />
+      <Route path="/editproduto" element={<EditarProduto />} />
+      <Route path="/carrinho/:id_produto" element={<Carrinho />} />
+      <Route path="/carrinho" element={<Carrinho />} />
+    </Routes>
+    // </BrowserRouter>
+  );
+};
 
 export default CustomRoutes;

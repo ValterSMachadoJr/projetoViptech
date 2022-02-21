@@ -14,7 +14,7 @@ function Navegacao() {
           <Link to="/home">Home &gt; </Link>
           <Link to="/addprodutos">Adicionar produto &gt; {""}</Link>
           <Link to="/editproduto">Editar produto &gt; {""}</Link>
-          <Link to="/carrinho">Carrinho &gt;{""} </Link>
+          <Link to="/carrinho?">Carrinho &gt; {""} </Link>
         </nav>
       </div>
     </>
