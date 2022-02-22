@@ -169,11 +169,10 @@ export function AdicionarProduto() {
                 }}
               >
                 <TextField
-                  //  value={currency}
-                  // value: moment().format('l');
                   label={"Valor"}
                   variant="outlined"
                   type="number"
+                  value={valor === 0 ? "" : valor}
                   onChange={(event) => setValor(Number(event.target.value))}
                   style={{ width: "70%", backgroundColor: "white" }}
                 />

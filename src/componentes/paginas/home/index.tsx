@@ -1,4 +1,4 @@
-import { Button, CircularProgress } from "@mui/material";
+import { Alert, Button, CircularProgress, Snackbar } from "@mui/material";
 import { AxiosResponse } from "axios";
 import { ProdutoDTO } from "dtos/ProdutoDTO";
 import React, { useEffect, useState } from "react";
@@ -9,6 +9,11 @@ import "./home.css";
 function Home() {
   const [produtos, setProdutos] = useState<Array<ProdutoDTO>>([]);
   const [isLoading, setIsloading] = useState<boolean>(true);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [severity, setSeverity] = useState<
+    "success" | "info" | "warning" | "error"
+  >("success");
+  const [feedbackMessage, setFeedbackMessage] = useState<string>("");
 
   useEffect(() => {
     const getProduto = async () => {
@@ -18,9 +23,14 @@ function Home() {
           `${process.env.REACT_APP_API_URL}/produto`
         );
         setProdutos(getResponse.data);
+        setSeverity("success");
+        setFeedbackMessage("Lista de produtos carregados com sucesso!");
         console.log(getResponse.data);
       } catch (error) {
         console.log(error);
+        setSeverity("error");
+        setFeedbackMessage("Não foi possível buscar os produtos");
+        setIsOpen(true);
       } finally {
         setIsloading(false);
       }
@@ -30,6 +40,10 @@ function Home() {
   }, []);
 
   console.log(produtos);
+
+  function closeSnackbar() {
+    setIsOpen(false);
+  }
 
   return (
     <>
@@ -72,6 +86,21 @@ function Home() {
           ))}
         </div>
       )}
+
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={isOpen}
+        autoHideDuration={6000}
+        onClose={closeSnackbar}
+      >
+        <Alert
+          onClose={closeSnackbar}
+          severity={severity}
+          sx={{ width: "100%" }}
+        >
+          {feedbackMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 }

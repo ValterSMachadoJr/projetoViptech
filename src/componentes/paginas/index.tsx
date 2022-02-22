@@ -180,10 +180,11 @@ export default function Carrinho() {
                 <div
                   style={{ display: "flex", justifyContent: "space-between" }}
                 >
-                  <p>Valor total {`R$ ${ValorTotal}`}</p>
+                  <p>Valor total </p>
                   <p>{`R$ ${ValorTotal}`}</p>
                 </div>
                 <button
+                  className="valorTotal"
                   onClick={(event) => {
                     calculaNotas(ValorTotal);
                   }}
