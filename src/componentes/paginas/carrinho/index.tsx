@@ -37,10 +37,13 @@ export default function Carrinho() {
       console.log(erro);
     }
   }
+  const CalculaSubTotal = valor * contador;
+  console.log(CalculaSubTotal);
 
-  const frete = Number(valor / 10);
+  const frete = Number(CalculaSubTotal / 10);
   const Frete = Number(frete.toFixed(2));
-  const valorTotal = Number(Frete + valor);
+  const valorTotal = Number(Frete + CalculaSubTotal);
+  console.log(CalculaSubTotal);
   const ValorTotal = Number(valorTotal.toFixed(2));
   //const subTotal: Number = Number(setContador * valor);
 
@@ -198,7 +201,7 @@ export default function Carrinho() {
                     style={{ display: "flex", justifyContent: "space-between" }}
                   >
                     <p>Subtotal </p>
-                    <h5> {`R$ ${valor}`}</h5>
+                    <h5> {`R$ ${CalculaSubTotal}`}</h5>
                   </div>
                   <hr></hr>
                 </div>

@@ -23,8 +23,8 @@ export function EditarProduto() {
 
   const [nome, setNome] = useState<string>("");
 
-  const [id_cor, setIdcor] = useState<Number>(0);
-  const [id_marca, setIdmarca] = useState<Number>(0);
+  const [cor, setCor] = useState<string>("");
+  const [marca, setMarca] = useState<string>("");
   const [valor, setValor] = useState<Number>(0);
   const [imagem, setImagem] = useState<string>("");
 
@@ -45,8 +45,8 @@ export function EditarProduto() {
 
     const editarProduto = new ProdutoDTO(
       nome,
-      id_cor,
-      id_marca,
+      cor,
+      marca,
       valor,
       imagem,
       Number(id_produto)
@@ -63,8 +63,8 @@ export function EditarProduto() {
         setSeverity("success");
         setIsOpen(true);
         setNome("");
-        setIdcor(Number(""));
-        setIdmarca(Number(""));
+        setCor("");
+        setMarca("");
         setValor(Number(""));
         //       navigate('/home') voltaria a página home
 
@@ -86,8 +86,8 @@ export function EditarProduto() {
         `${process.env.REACT_APP_API_URL}/produto/${id_produto}`
       );
       setNome(resposta.data.nome);
-      setIdcor(resposta.data.id_cor);
-      setIdmarca(resposta.data.id_marca);
+      setCor(resposta.data.cor);
+      setMarca(resposta.data.marca);
       setValor(resposta.data.valor);
       console.log(resposta);
       //  setImagem(resposta.data.(`${"data:image/jpeg;base64,"} + ${imagem}`)
@@ -253,11 +253,10 @@ export function EditarProduto() {
                   }}
                 >
                   <TextField
-                    value={id_marca}
+                    value={marca}
                     label={"Marca"}
-                    type="number"
                     variant="outlined"
-                    onChange={(event) => setIdmarca(Number(event.target.value))}
+                    onChange={(event) => setMarca(event.target.value)}
                     style={{ width: "53%", backgroundColor: "white" }}
                   />
                 </div>
@@ -307,11 +306,10 @@ export function EditarProduto() {
                   }}
                 >
                   <TextField
-                    value={id_cor}
+                    value={cor}
                     label={"Cor"}
                     variant="outlined"
-                    type="number"
-                    onChange={(event) => setIdcor(Number(event.target.value))}
+                    onChange={(event) => setCor(event.target.value)}
                     style={{ width: "30%", backgroundColor: "white" }}
                   />
                 </div>

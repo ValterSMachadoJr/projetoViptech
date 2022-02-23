@@ -40,8 +40,7 @@ export default function Produto(props: ProdutoProps) {
 
         <div className="details" style={{ padding: "40px", height: "40%" }}>
           <h2 className="camera">{produtoDTO.nome}</h2>
-          <p className="descricao">{produtoDTO.id_marca} </p>
-
+          <p className="descricao">{produtoDTO.marca} </p>
           <p className="valor">{produtoDTO.valor}</p>
         </div>
 

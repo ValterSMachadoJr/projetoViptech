@@ -6,6 +6,7 @@ import {
   Button,
   IconButton,
   Input,
+  MenuItem,
   Select,
   Snackbar,
   SvgIcon,
@@ -22,8 +23,8 @@ export function AdicionarProduto() {
   const uploadfile: any = useRef();
 
   const [nome, setNome] = useState<string>("");
-  const [id_cor, setIdcor] = useState<Number>(0);
-  const [id_marca, setIdmarca] = useState<Number>(0);
+  const [cor, setCor] = useState<string>("");
+  const [marca, setMarca] = useState<string>("");
   const [valor, setValor] = useState<Number>(0);
   const [imagem, setImagem] = useState<string>("");
   const [data_cadastro, SetDataCadastro] = useState<string>(
@@ -40,7 +41,7 @@ export function AdicionarProduto() {
 
   async function createProdutoHandler() {
     const isValidInputs = validateUserInputs();
-    const produtoDTO = new ProdutoDTO(nome, id_cor, id_marca, valor, imagem);
+    const produtoDTO = new ProdutoDTO(nome, cor, marca, valor, imagem);
 
     console.log(produtoDTO);
     if (isValidInputs) {
@@ -54,8 +55,8 @@ export function AdicionarProduto() {
         setSeverity("success");
         setIsOpen(true);
         setNome("");
-        setIdcor(Number(""));
-        setIdmarca(Number(""));
+        setCor("");
+        setMarca("");
         setValor(Number(""));
 
         console.log(postResponse);
@@ -202,11 +203,10 @@ export function AdicionarProduto() {
                 }}
               >
                 <TextField
-                  value={id_marca}
+                  value={marca}
                   label={"Marca"}
-                  type="number"
                   variant="outlined"
-                  onChange={(event) => setIdmarca(Number(event.target.value))}
+                  onChange={(event) => setMarca(event.target.value)}
                   style={{ width: "55%", backgroundColor: "white" }}
                 />
               </div>
@@ -234,14 +234,16 @@ export function AdicionarProduto() {
                   justifyContent: "start",
                 }}
               >
-                <TextField
-                  value={id_cor}
-                  label={"Cor"}
+                <Select
+                  value={cor}
+                  label="Cor"
                   variant="outlined"
-                  type="number"
-                  onChange={(event) => setIdcor(Number(event.target.value))}
+                  onChange={(event) => setCor(event.target.value)}
                   style={{ width: "30%", backgroundColor: "white" }}
-                />
+                >
+                  <MenuItem value={"branco"}>branco</MenuItem>
+                  <MenuItem value={"preto"}>Preto</MenuItem>
+                </Select>
               </div>
 
               <div
