@@ -6,6 +6,7 @@ import {
   Button,
   IconButton,
   Input,
+  Select,
   Snackbar,
   SvgIcon,
 } from "@mui/material";
@@ -177,6 +178,20 @@ export function AdicionarProduto() {
                   }}
                   style={{ width: "70%", backgroundColor: "white" }}
                 />
+                <div
+                  style={{
+                    marginTop: "-15px",
+                    marginLeft: "120px",
+                    width: "35%",
+                    display: "flex",
+                    color: "red",
+                    justifyContent: "center",
+                  }}
+                >
+                  <p>
+                    {messageNameHasError.length > 0 ? messageNameHasError : ""}
+                  </p>
+                </div>
               </div>
 
               <div
@@ -192,7 +207,7 @@ export function AdicionarProduto() {
                   type="number"
                   variant="outlined"
                   onChange={(event) => setIdmarca(Number(event.target.value))}
-                  style={{ width: "70%", backgroundColor: "white" }}
+                  style={{ width: "55%", backgroundColor: "white" }}
                 />
               </div>
               <div
@@ -203,12 +218,13 @@ export function AdicionarProduto() {
                 }}
               >
                 <TextField
+                  value={valor}
                   label={"Valor"}
                   variant="outlined"
                   type="number"
-                  value={valor === 0 ? "" : valor}
+                  //  value={valor === 0 ? "" : valor}
                   onChange={(event) => setValor(Number(event.target.value))}
-                  style={{ width: "70%", backgroundColor: "white" }}
+                  style={{ width: "30%", backgroundColor: "white" }}
                 />
               </div>
               <div
@@ -224,7 +240,7 @@ export function AdicionarProduto() {
                   variant="outlined"
                   type="number"
                   onChange={(event) => setIdcor(Number(event.target.value))}
-                  style={{ width: "70%", backgroundColor: "white" }}
+                  style={{ width: "30%", backgroundColor: "white" }}
                 />
               </div>
 
@@ -241,7 +257,7 @@ export function AdicionarProduto() {
                   onChange={(event) => SetDataCadastro(event.target.value)}
                   label={"Data Cadastro"}
                   variant="outlined"
-                  style={{ width: "70%", backgroundColor: "white" }}
+                  style={{ width: "30%", backgroundColor: "white" }}
                 />
               </div>
 

@@ -1,3 +1,4 @@
+import { Button, TextField } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { NodeAPI } from "services/Service";
@@ -16,14 +17,9 @@ export default function Carrinho() {
   const [texto, setTexto] = useState<string>("");
 
   const [imagem, setImagem] = useState<string>("");
+  const [contador, setContador] = useState<number>(1);
 
   const { id_produto } = useParams();
-
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [severity, setSeverity] = useState<
-    "success" | "info" | "warning" | "error"
-  >("success");
-  const [feedbackMessage, setFeedbackMessage] = useState<string>("");
 
   async function getProdutoById() {
     try {
@@ -46,6 +42,7 @@ export default function Carrinho() {
   const Frete = Number(frete.toFixed(2));
   const valorTotal = Number(Frete + valor);
   const ValorTotal = Number(valorTotal.toFixed(2));
+  //const subTotal: Number = Number(setContador * valor);
 
   useEffect(() => {
     getProdutoById();
@@ -134,9 +131,46 @@ export default function Carrinho() {
                   justifyContent: "space-between",
                 }}
               >
-                <div className="quantidade" style={{ backgroundColor: "blue" }}>
+                <div className="quantidade">
                   Quantidade
+                  <Button
+                    onClick={() => {
+                      if (contador > 1) setContador(contador - 1);
+                    }}
+                  >
+                    <svg
+                      width="32"
+                      height="33"
+                      viewBox="0 0 32 33"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M9 18.5V15.5H23V18.5H9Z" fill="#353535" />
+                      <circle cx="16" cy="16.5" r="15.5" stroke="#353535" />
+                    </svg>
+                  </Button>
+                  <TextField value={contador}></TextField>
+                  <Button
+                    onClick={() => {
+                      setContador(contador + 1);
+                    }}
+                  >
+                    <svg
+                      width="32"
+                      height="32"
+                      viewBox="0 0 32 32"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M17 17.5V23.5H15V17.5H9V15.5H15V9.5H17V15.5H23V17.5H17Z"
+                        fill="#353535"
+                      />
+                      <circle cx="16" cy="16" r="15.5" stroke="#353535" />
+                    </svg>
+                  </Button>
                 </div>
+
                 <div
                   style={{
                     backgroundColor: "yellow",
@@ -164,7 +198,7 @@ export default function Carrinho() {
                     style={{ display: "flex", justifyContent: "space-between" }}
                   >
                     <p>Subtotal </p>
-                    <p> {`R$ ${valor}`}</p>
+                    <h5> {`R$ ${valor}`}</h5>
                   </div>
                   <hr></hr>
                 </div>
@@ -173,7 +207,7 @@ export default function Carrinho() {
                     style={{ display: "flex", justifyContent: "space-between" }}
                   >
                     <p>Frete </p>
-                    <p>{`R$ ${Frete}`}</p>
+                    <h5>{`R$ ${Frete}`}</h5>
                   </div>
                   <hr></hr>
                 </div>
@@ -181,7 +215,7 @@ export default function Carrinho() {
                   style={{ display: "flex", justifyContent: "space-between" }}
                 >
                   <p>Valor total </p>
-                  <p>{`R$ ${ValorTotal}`}</p>
+                  <h4>{`R$ ${ValorTotal}`}</h4>
                 </div>
                 <button
                   className="valorTotal"

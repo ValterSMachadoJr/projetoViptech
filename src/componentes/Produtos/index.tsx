@@ -43,7 +43,6 @@ export default function Produto(props: ProdutoProps) {
           <p className="descricao">{produtoDTO.id_marca} </p>
 
           <p className="valor">{produtoDTO.valor}</p>
-          <p className="cor">{produtoDTO.id_cor}</p>
         </div>
 
         <div className="actions">

@@ -1,3 +1,5 @@
+import { CorDTO } from "./CorDTO";
+
 export class ProdutoDTO {
   id_produto?: Number;
   nome: string;

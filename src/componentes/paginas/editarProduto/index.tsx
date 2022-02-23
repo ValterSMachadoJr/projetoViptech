@@ -224,15 +224,16 @@ export function EditarProduto() {
                           messageNameHasError.length > 0 ? "red" : "grey",
                       },
                     }}
-                    style={{ width: "70%", backgroundColor: "white" }}
+                    style={{ width: "65%", backgroundColor: "white" }}
                   />
 
                   <div
                     style={{
                       marginTop: "-15px",
                       marginLeft: "120px",
-                      width: "70%",
+                      width: "35%",
                       display: "flex",
+                      color: "red",
                       justifyContent: "center",
                     }}
                   >
@@ -257,7 +258,7 @@ export function EditarProduto() {
                     type="number"
                     variant="outlined"
                     onChange={(event) => setIdmarca(Number(event.target.value))}
-                    style={{ width: "70%", backgroundColor: "white" }}
+                    style={{ width: "53%", backgroundColor: "white" }}
                   />
                 </div>
                 <div
@@ -279,14 +280,15 @@ export function EditarProduto() {
                     }}
                     type="number"
                     onChange={(event) => setValor(Number(event.target.value))}
-                    style={{ width: "70%", backgroundColor: "white" }}
+                    style={{ width: "30%", backgroundColor: "white" }}
                   />
 
                   <div
                     style={{
                       marginTop: "-15px",
-                      width: "100%",
+                      width: "35%",
                       display: "flex",
+                      color: "red",
                       justifyContent: "center",
                     }}
                   >
@@ -310,7 +312,7 @@ export function EditarProduto() {
                     variant="outlined"
                     type="number"
                     onChange={(event) => setIdcor(Number(event.target.value))}
-                    style={{ width: "70%", backgroundColor: "white" }}
+                    style={{ width: "30%", backgroundColor: "white" }}
                   />
                 </div>
 
@@ -321,6 +323,8 @@ export function EditarProduto() {
                       style={{ display: "none" }}
                       type="file"
                       onChange={handlefile}
+                      accept="image/*"
+                      max-file-size="1024"
                     />
                     <img
                       src={`data:image/png;base64,${imagem}`}
