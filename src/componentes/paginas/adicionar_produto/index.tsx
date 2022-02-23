@@ -1,20 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./add.css";
 import TextField from "@mui/material/TextField";
-import {
-  Alert,
-  Button,
-  IconButton,
-  Input,
-  MenuItem,
-  Select,
-  Snackbar,
-  SvgIcon,
-} from "@mui/material";
+import { Alert, Button, MenuItem, Snackbar } from "@mui/material";
 import { AxiosResponse } from "axios";
 import { NodeAPI } from "services/Service";
 import { ProdutoDTO } from "dtos/ProdutoDTO";
-import Navegacao from "../navegacao";
 import moment from "moment";
 import "moment/locale/pt-br";
 import { Link } from "react-router-dom";
@@ -37,8 +27,8 @@ export function AdicionarProduto() {
   >("success");
   const [feedbackMessage, setFeedbackMessage] = useState<string>("");
   const [messageNameHasError, setMessageNameHasError] = useState<string>("");
-  const [messageValorHasError, setMessageValorHasError] = useState<string>();
-
+  const [messageMarcaHasError, setMessageMarcaHasError] = useState<string>("");
+  const [messageValorHasError, setMessageValorHasError] = useState<string>("");
   async function createProdutoHandler() {
     const isValidInputs = validateUserInputs();
     const produtoDTO = new ProdutoDTO(nome, cor, marca, valor, imagem);
@@ -105,6 +95,10 @@ export function AdicionarProduto() {
   }, [nome]);
 
   useEffect(() => {
+    setMessageMarcaHasError("");
+  }, [marca]);
+
+  useEffect(() => {
     setMessageValorHasError("");
   }, [valor]);
 
@@ -114,7 +108,10 @@ export function AdicionarProduto() {
       setMessageNameHasError("Nome digitado está no formato inválido");
       isValid = false;
     }
-
+    if (nome.length < 4 || !nome.includes(" ")) {
+      setMessageMarcaHasError("Marca digitado está no formato inválido");
+      isValid = false;
+    }
     if (valor === 0 || valor < 0) {
       setMessageValorHasError("Valor digitado está no formato inválido");
       isValid = false;
@@ -204,11 +201,37 @@ export function AdicionarProduto() {
               >
                 <TextField
                   value={marca}
-                  label={"Marca"}
+                  label="Marca"
+                  select
                   variant="outlined"
+                  sx={{
+                    "& .MuiOutlinedInput-root fieldset": {
+                      borderColor:
+                        messageMarcaHasError.length > 0 ? "red" : "grey",
+                    },
+                  }}
                   onChange={(event) => setMarca(event.target.value)}
                   style={{ width: "55%", backgroundColor: "white" }}
-                />
+                >
+                  <MenuItem value="Intelbrás">Intelbrás</MenuItem>
+                  <MenuItem value="HIKVISION">HIKVISION</MenuItem>
+                </TextField>
+                <div
+                  style={{
+                    marginTop: "-15px",
+                    marginLeft: "120px",
+                    width: "35%",
+                    display: "flex",
+                    color: "red",
+                    justifyContent: "center",
+                  }}
+                >
+                  <p>
+                    {messageMarcaHasError.length > 0
+                      ? messageMarcaHasError
+                      : ""}
+                  </p>
+                </div>
               </div>
               <div
                 style={{
@@ -218,11 +241,16 @@ export function AdicionarProduto() {
                 }}
               >
                 <TextField
-                  value={valor}
                   label={"Valor"}
                   variant="outlined"
+                  sx={{
+                    "& .MuiOutlinedInput-root fieldset": {
+                      borderColor:
+                        messageValorHasError.length > 0 ? "red" : "grey",
+                    },
+                  }}
                   type="number"
-                  //  value={valor === 0 ? "" : valor}
+                  value={valor === 0 ? "" : valor}
                   onChange={(event) => setValor(Number(event.target.value))}
                   style={{ width: "30%", backgroundColor: "white" }}
                 />
@@ -234,16 +262,17 @@ export function AdicionarProduto() {
                   justifyContent: "start",
                 }}
               >
-                <Select
+                <TextField
                   value={cor}
-                  label="Cor"
+                  label="cor"
+                  select
                   variant="outlined"
                   onChange={(event) => setCor(event.target.value)}
                   style={{ width: "30%", backgroundColor: "white" }}
                 >
                   <MenuItem value={"branco"}>branco</MenuItem>
                   <MenuItem value={"preto"}>Preto</MenuItem>
-                </Select>
+                </TextField>
               </div>
 
               <div
@@ -276,14 +305,17 @@ export function AdicionarProduto() {
                     max-file-size="1024"
                     onChange={handlefile}
                   />
-                  <img
-                    src={`data:image/png;base64,${imagem}`}
-                    alt=""
-                    style={{
-                      width: "110px",
-                      height: "130px",
-                    }}
-                  />
+                  {imagem && (
+                    <img
+                      style={{
+                        width: "110px",
+                        height: "130px",
+                      }}
+                      src={`data:image/png;base64,${imagem}`}
+                      alt=""
+                    />
+                  )}
+
                   <Button onClick={openFileExplorer} variant="outlined">
                     Abrir explorer
                   </Button>

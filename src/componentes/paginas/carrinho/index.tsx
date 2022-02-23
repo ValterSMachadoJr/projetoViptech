@@ -11,8 +11,8 @@ export default function Carrinho() {
   const [mostrarnotas, setMostrarNotas] = useState<boolean>(false);
 
   const [nome, setNome] = useState<string>("");
-  const [id_cor, setIdcor] = useState<Number>(0);
-  const [id_marca, setIdmarca] = useState<Number>(0);
+  const [cor, setCor] = useState<string>("");
+  const [marca, setMarca] = useState<string>("");
   const [valor, setValor] = useState<number>(0);
   const [texto, setTexto] = useState<string>("");
 
@@ -27,8 +27,8 @@ export default function Carrinho() {
         `${process.env.REACT_APP_API_URL}/produto/${id_produto}`
       );
       setNome(resposta.data.nome);
-      setIdcor(resposta.data.id_cor);
-      setIdmarca(resposta.data.id_marca);
+      setCor(resposta.data.cor);
+      setMarca(resposta.data.marca);
       setValor(resposta.data.valor);
       console.log(resposta);
       //  setImagem(resposta.data.(`${"data:image/jpeg;base64,"} + ${imagem}`)
@@ -42,10 +42,11 @@ export default function Carrinho() {
 
   const frete = Number(CalculaSubTotal / 10);
   const Frete = Number(frete.toFixed(2));
+
   const valorTotal = Number(Frete + CalculaSubTotal);
-  console.log(CalculaSubTotal);
+
   const ValorTotal = Number(valorTotal.toFixed(2));
-  //const subTotal: Number = Number(setContador * valor);
+  const calculaSubTotalDuascasas = CalculaSubTotal.toFixed(2);
 
   useEffect(() => {
     getProdutoById();
@@ -58,7 +59,7 @@ export default function Carrinho() {
     for (var x = 0; x < notas.length; x++) {
       if (valor >= notas[x]) {
         var div = Math.floor(valor / notas[x]);
-        texto += div + "  Nota(s) de: " + notas[x] + "  \n  " + " = ";
+        texto += div + "  Nota(s) de: " + notas[x] + "  \n  " + " / ";
         valor -= div * notas[x];
       }
     }
@@ -119,9 +120,9 @@ export default function Carrinho() {
                 >
                   <span style={{ fontWeight: "bold" }}>{nome}</span>
 
-                  <span>{id_cor}</span>
+                  <span>{cor}</span>
 
-                  <span>{id_marca}</span>
+                  <span>{marca}</span>
                 </div>
               </div>
               <div>
@@ -152,7 +153,15 @@ export default function Carrinho() {
                       <circle cx="16" cy="16.5" r="15.5" stroke="#353535" />
                     </svg>
                   </Button>
-                  <TextField value={contador}></TextField>
+                  <TextField
+                    style={{
+                      width: "40px",
+
+                      fontWeight: "bold",
+                      justifyContent: "center",
+                    }}
+                    value={contador}
+                  ></TextField>
                   <Button
                     onClick={() => {
                       setContador(contador + 1);
@@ -201,7 +210,7 @@ export default function Carrinho() {
                     style={{ display: "flex", justifyContent: "space-between" }}
                   >
                     <p>Subtotal </p>
-                    <h5> {`R$ ${CalculaSubTotal}`}</h5>
+                    <h5> {`R$ ${calculaSubTotalDuascasas}`}</h5>
                   </div>
                   <hr></hr>
                 </div>
@@ -252,11 +261,11 @@ export default function Carrinho() {
               className="teste2"
               style={{
                 display: "flex",
-                backgroundColor: "yellow",
+
                 border: "1px solid #B2B2B2",
                 borderRadius: "5px",
                 width: "50%",
-                color: "red",
+                color: "Green",
                 justifyContent: "center",
               }}
             >
