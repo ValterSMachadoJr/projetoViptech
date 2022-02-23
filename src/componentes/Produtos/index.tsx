@@ -1,4 +1,5 @@
 import { Button, CircularProgress, IconButton } from "@mui/material";
+import { AxiosResponse } from "axios";
 import { ProdutoDTO } from "dtos/ProdutoDTO";
 import React, { useEffect, useState } from "react";
 import { NodeAPI } from "services/Service";
@@ -40,6 +41,7 @@ export default function Produto(props: ProdutoProps) {
         <div className="details" style={{ padding: "40px", height: "40%" }}>
           <h2 className="camera">{produtoDTO.nome}</h2>
           <p className="descricao">{produtoDTO.id_marca} </p>
+
           <p className="valor">{produtoDTO.valor}</p>
           <p className="cor">{produtoDTO.id_cor}</p>
         </div>

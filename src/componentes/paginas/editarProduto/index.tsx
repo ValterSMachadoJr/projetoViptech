@@ -22,6 +22,7 @@ export function EditarProduto() {
   // const navigate = useNavigate(); nao estou retornando para o página home
 
   const [nome, setNome] = useState<string>("");
+
   const [id_cor, setIdcor] = useState<Number>(0);
   const [id_marca, setIdmarca] = useState<Number>(0);
   const [valor, setValor] = useState<Number>(0);

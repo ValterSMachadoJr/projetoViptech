@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import Carrinho from "./paginas";
+import Carrinho from "./paginas/carrinho/index";
 import { AdicionarProduto } from "./paginas/adicionar_produto";
 import { EditarProduto } from "./paginas/editarProduto";
 

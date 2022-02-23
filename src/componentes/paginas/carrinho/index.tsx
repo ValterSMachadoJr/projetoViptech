@@ -58,7 +58,7 @@ export default function Carrinho() {
     for (var x = 0; x < notas.length; x++) {
       if (valor >= notas[x]) {
         var div = Math.floor(valor / notas[x]);
-        texto += div + "  Notas de: " + notas[x] + "  \n  " + " = ";
+        texto += div + "  Nota(s) de: " + notas[x] + "  \n  " + " = ";
         valor -= div * notas[x];
       }
     }
@@ -197,17 +197,33 @@ export default function Carrinho() {
                     borderRadius: "7px",
                   }}
                 >
-                  <p style={{ backgroundColor: "red" }}></p>
+                  <p></p>
                   PAGAR
                 </button>
               </div>
             </div>
           </div>
         </div>
-        <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
           {mostrarnotas && (
-            <div>
-              <p>{texto}</p>
+            <div
+              className="teste2"
+              style={{
+                display: "flex",
+                backgroundColor: "yellow",
+                border: "1px solid #B2B2B2",
+                borderRadius: "5px",
+                width: "50%",
+                color: "red",
+                justifyContent: "center",
+              }}
+            >
+              <h3>{texto}</h3>
             </div>
           )}
         </div>

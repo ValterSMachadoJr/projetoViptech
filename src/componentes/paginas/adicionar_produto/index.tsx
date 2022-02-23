@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./add.css";
 import TextField from "@mui/material/TextField";
 import {
@@ -34,31 +34,37 @@ export function AdicionarProduto() {
     "success" | "info" | "warning" | "error"
   >("success");
   const [feedbackMessage, setFeedbackMessage] = useState<string>("");
+  const [messageNameHasError, setMessageNameHasError] = useState<string>("");
+  const [messageValorHasError, setMessageValorHasError] = useState<string>();
 
   async function createProdutoHandler() {
+    const isValidInputs = validateUserInputs();
     const produtoDTO = new ProdutoDTO(nome, id_cor, id_marca, valor, imagem);
+
     console.log(produtoDTO);
-    try {
-      const postResponse: AxiosResponse = await NodeAPI.post(
-        `${process.env.REACT_APP_API_URL}/produto`,
-        produtoDTO
-      );
+    if (isValidInputs) {
+      try {
+        const postResponse: AxiosResponse = await NodeAPI.post(
+          `${process.env.REACT_APP_API_URL}/produto`,
+          produtoDTO
+        );
 
-      setFeedbackMessage("Produto cadastrado com sucesso!");
-      setSeverity("success");
-      setIsOpen(true);
-      setNome("");
-      setIdcor(Number(""));
-      setIdmarca(Number(""));
-      setValor(Number(""));
+        setFeedbackMessage("Produto cadastrado com sucesso!");
+        setSeverity("success");
+        setIsOpen(true);
+        setNome("");
+        setIdcor(Number(""));
+        setIdmarca(Number(""));
+        setValor(Number(""));
 
-      console.log(postResponse);
-      // window.location.replace("/home");
-    } catch (error) {
-      setFeedbackMessage("Produto não cadastrado!");
-      setSeverity("error");
-      setIsOpen(true);
-      console.log(error);
+        console.log(postResponse);
+        // window.location.replace("/home");
+      } catch (error) {
+        setFeedbackMessage("Produto não cadastrado!");
+        setSeverity("error");
+        setIsOpen(true);
+        console.log(error);
+      }
     }
   }
 
@@ -91,6 +97,28 @@ export function AdicionarProduto() {
         }
       };
     });
+  }
+  useEffect(() => {
+    setMessageNameHasError("");
+  }, [nome]);
+
+  useEffect(() => {
+    setMessageValorHasError("");
+  }, [valor]);
+
+  function validateUserInputs(): boolean {
+    let isValid = true;
+    if (nome.length < 4 || !nome.includes(" ")) {
+      setMessageNameHasError("Nome digitado está no formato inválido");
+      isValid = false;
+    }
+
+    if (valor === 0 || valor < 0) {
+      setMessageValorHasError("Valor digitado está no formato inválido");
+      isValid = false;
+    }
+
+    return isValid;
   }
 
   return (
@@ -141,6 +169,12 @@ export function AdicionarProduto() {
                   onChange={(event) => setNome(event.target.value)}
                   label={"Nome do Produto"}
                   variant="outlined"
+                  sx={{
+                    "& .MuiOutlinedInput-root fieldset": {
+                      borderColor:
+                        messageNameHasError.length > 0 ? "red" : "grey",
+                    },
+                  }}
                   style={{ width: "70%", backgroundColor: "white" }}
                 />
               </div>
