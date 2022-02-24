@@ -24,14 +24,12 @@ export function AdicionarProduto() {
     "success" | "info" | "warning" | "error"
   >("success");
   const [feedbackMessage, setFeedbackMessage] = useState<string>("");
-
   const [messageNameHasError, setMessageNameHasError] = useState<string>("");
-
   const [messageMarcaHasError, setMessageMarcaHasError] = useState<string>("");
-
   const [messageValorHasError, setMessageValorHasError] = useState<string>("");
-
   const [messageCorHasError, setMessageCorHasError] = useState<string>("");
+  const [messageImagemHasError, setMessageImagemHasError] =
+    useState<string>("");
 
   async function createProdutoHandler() {
     const isValidInputs = validateUserInputs();
@@ -105,6 +103,10 @@ export function AdicionarProduto() {
     setMessageCorHasError("");
   }, [cor]);
 
+  useEffect(() => {
+    setMessageImagemHasError("");
+  }, [cor]);
+
   function validateUserInputs(): boolean {
     let isValid = true;
     if (nome.length < 4 || !nome.includes(" ")) {
@@ -125,6 +127,11 @@ export function AdicionarProduto() {
     }
     if (cor.length < 4) {
       setMessageCorHasError("Cor digitado está no formato inválido");
+
+      isValid = false;
+    }
+    if (imagem.length < 4) {
+      setMessageImagemHasError("Produto está sem imagem!");
 
       isValid = false;
     }
@@ -368,6 +375,22 @@ export function AdicionarProduto() {
                   <Button onClick={openFileExplorer} variant="outlined">
                     Escoher Imagem
                   </Button>
+                </div>
+                <div
+                  style={{
+                    marginTop: "-15px",
+                    marginLeft: "120px",
+                    width: "35%",
+                    display: "flex",
+                    color: "red",
+                    justifyContent: "center",
+                  }}
+                >
+                  <p>
+                    {messageImagemHasError.length > 0
+                      ? messageImagemHasError
+                      : ""}
+                  </p>
                 </div>
               </div>
 
