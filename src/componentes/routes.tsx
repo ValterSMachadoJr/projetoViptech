@@ -5,14 +5,9 @@ import { AdicionarProduto } from "./paginas/adicionar_produto";
 import { EditarProduto } from "./paginas/editarProduto";
 
 import Home from "./paginas/home/index";
-//import Sobre from "./adicionar produto";
-//import Usuario from "./Usuario";
-
-//'{ exact: true; path: string; element: Element; }
 
 const CustomRoutes = () => {
   return (
-    //<BrowserRouter>
     <Routes>
       <Route path="/home" element={<Home />} />
       <Route index element={<Home />} />
@@ -22,7 +17,6 @@ const CustomRoutes = () => {
       <Route path="/carrinho/:id_produto" element={<Carrinho />} />
       <Route path="/carrinho" element={<Carrinho />} />
     </Routes>
-    // </BrowserRouter>
   );
 };
 

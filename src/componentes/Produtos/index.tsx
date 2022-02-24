@@ -30,7 +30,13 @@ export default function Produto(props: ProdutoProps) {
         className="content-product"
         style={{ padding: "10px", height: "10%" }}
       >
-        <div className="img">
+        <div
+          className="img"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
           <img
             className="img"
             src={"data:image/jpeg;base64," + produtoDTO.imagem}
@@ -39,11 +45,11 @@ export default function Produto(props: ProdutoProps) {
         </div>
 
         <div className="details" style={{ padding: "40px", height: "40%" }}>
-          <h2 className="camera">{produtoDTO.nome}</h2>
-          <p className="descricao">{produtoDTO.marca} </p>
+          <div className="camera"> {produtoDTO.nome}</div>
+          <div className="marca">{produtoDTO.marca} </div>
 
-          <p className="valor">{produtoDTO.valor}</p>
-          <p className="descricao">{produtoDTO.cor} </p>
+          <div className="valor">{produtoDTO.valor}</div>
+          <div className="cor">{produtoDTO.cor} </div>
         </div>
 
         <div className="actions">

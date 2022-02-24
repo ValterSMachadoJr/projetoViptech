@@ -105,6 +105,7 @@ font-family: Raleway;
   .content-product{
       display:flex;
       flex-direction: row;
+      align-items: center;
   
   }
   
@@ -137,6 +138,7 @@ font-family: Raleway;
   line-height: 28px;
   font-feature-settings: 'pnum' on, 'lnum' on;
   
+  
   /* Cinza */
   
   color: #353535;
@@ -155,3 +157,19 @@ font-family: Raleway;
   line-height: 28px;
   font-feature-settings: 'pnum' on, 'lnum' on;
   }
+
+.marca {  font-family: Raleway;
+font-style: normal;
+font-weight: bold;
+width: "82px";
+
+line-height: 28px;
+font-feature-settings: 'pnum' on, 'lnum' on;}
+
+.cor {  font-family: Raleway;
+  font-style: normal;
+  font-weight: bold;
+  width: "82px";
+  
+  line-height: 28px;
+  font-feature-settings: 'pnum' on, 'lnum' on;}

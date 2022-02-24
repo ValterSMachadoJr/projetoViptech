@@ -11,7 +11,6 @@ import { Link } from "react-router-dom";
 
 export function AdicionarProduto() {
   const uploadfile: any = useRef();
-
   const [nome, setNome] = useState<string>("");
   const [cor, setCor] = useState<string>("");
   const [marca, setMarca] = useState<string>("");
@@ -20,20 +19,25 @@ export function AdicionarProduto() {
   const [data_cadastro, SetDataCadastro] = useState<string>(
     moment().format("L")
   );
-
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [severity, setSeverity] = useState<
     "success" | "info" | "warning" | "error"
   >("success");
   const [feedbackMessage, setFeedbackMessage] = useState<string>("");
+
   const [messageNameHasError, setMessageNameHasError] = useState<string>("");
+
   const [messageMarcaHasError, setMessageMarcaHasError] = useState<string>("");
+
   const [messageValorHasError, setMessageValorHasError] = useState<string>("");
+
+  const [messageCorHasError, setMessageCorHasError] = useState<string>("");
+
   async function createProdutoHandler() {
     const isValidInputs = validateUserInputs();
+
     const produtoDTO = new ProdutoDTO(nome, cor, marca, valor, imagem);
 
-    console.log(produtoDTO);
     if (isValidInputs) {
       try {
         const postResponse: AxiosResponse = await NodeAPI.post(
@@ -48,23 +52,17 @@ export function AdicionarProduto() {
         setCor("");
         setMarca("");
         setValor(Number(""));
-
-        console.log(postResponse);
-        // window.location.replace("/home");
       } catch (error) {
         setFeedbackMessage("Produto não cadastrado!");
         setSeverity("error");
         setIsOpen(true);
-        console.log(error);
       }
     }
   }
-
   function closeSnackbar() {
     setIsOpen(false);
   }
 
-  //botao uploud
   function openFileExplorer() {
     uploadfile.current.click();
   }
@@ -90,30 +88,44 @@ export function AdicionarProduto() {
       };
     });
   }
+
   useEffect(() => {
     setMessageNameHasError("");
   }, [nome]);
+
+  useEffect(() => {
+    setMessageValorHasError("");
+  }, [valor]);
 
   useEffect(() => {
     setMessageMarcaHasError("");
   }, [marca]);
 
   useEffect(() => {
-    setMessageValorHasError("");
-  }, [valor]);
+    setMessageCorHasError("");
+  }, [cor]);
 
   function validateUserInputs(): boolean {
     let isValid = true;
     if (nome.length < 4 || !nome.includes(" ")) {
       setMessageNameHasError("Nome digitado está no formato inválido");
+
       isValid = false;
     }
-    if (nome.length < 4 || !nome.includes(" ")) {
-      setMessageMarcaHasError("Marca digitado está no formato inválido");
-      isValid = false;
-    }
+
     if (valor === 0 || valor < 0) {
       setMessageValorHasError("Valor digitado está no formato inválido");
+      isValid = false;
+    }
+
+    if (marca.length < 4) {
+      setMessageMarcaHasError("Marca digitado está no formato inválido");
+
+      isValid = false;
+    }
+    if (cor.length < 4) {
+      setMessageCorHasError("Cor digitado está no formato inválido");
+
       isValid = false;
     }
 
@@ -201,20 +213,20 @@ export function AdicionarProduto() {
               >
                 <TextField
                   value={marca}
+                  onChange={(event) => setMarca(event.target.value)}
                   label="Marca"
-                  select
                   variant="outlined"
+                  select
                   sx={{
                     "& .MuiOutlinedInput-root fieldset": {
                       borderColor:
                         messageMarcaHasError.length > 0 ? "red" : "grey",
                     },
                   }}
-                  onChange={(event) => setMarca(event.target.value)}
                   style={{ width: "55%", backgroundColor: "white" }}
                 >
-                  <MenuItem value="Intelbrás">Intelbrás</MenuItem>
-                  <MenuItem value="HIKVISION">HIKVISION</MenuItem>
+                  <MenuItem value={"Intelbrás"}>Intelbrás</MenuItem>
+                  <MenuItem value={"Ikvision"}>Ikvision</MenuItem>
                 </TextField>
                 <div
                   style={{
@@ -254,6 +266,22 @@ export function AdicionarProduto() {
                   onChange={(event) => setValor(Number(event.target.value))}
                   style={{ width: "30%", backgroundColor: "white" }}
                 />
+                <div
+                  style={{
+                    marginTop: "-15px",
+                    marginLeft: "120px",
+                    width: "35%",
+                    display: "flex",
+                    color: "red",
+                    justifyContent: "center",
+                  }}
+                >
+                  <p>
+                    {messageValorHasError.length > 0
+                      ? messageValorHasError
+                      : ""}
+                  </p>
+                </div>
               </div>
               <div
                 style={{
@@ -264,15 +292,36 @@ export function AdicionarProduto() {
               >
                 <TextField
                   value={cor}
-                  label="cor"
                   select
-                  variant="outlined"
                   onChange={(event) => setCor(event.target.value)}
+                  label="cor"
+                  variant="outlined"
+                  sx={{
+                    "& .MuiOutlinedInput-root fieldset": {
+                      borderColor:
+                        messageCorHasError.length > 0 ? "red" : "grey",
+                    },
+                  }}
                   style={{ width: "30%", backgroundColor: "white" }}
                 >
-                  <MenuItem value={"branco"}>branco</MenuItem>
-                  <MenuItem value={"preto"}>Preto</MenuItem>
+                  <MenuItem value={"Branco"}>Branco</MenuItem>
+                  <MenuItem value={"Preto"}>Preto</MenuItem>
+                  <MenuItem value={"Cinza"}>Cinza</MenuItem>
                 </TextField>
+                <div
+                  style={{
+                    marginTop: "-15px",
+                    marginLeft: "120px",
+                    width: "35%",
+                    display: "flex",
+                    color: "red",
+                    justifyContent: "center",
+                  }}
+                >
+                  <p>
+                    {messageCorHasError.length > 0 ? messageCorHasError : ""}
+                  </p>
+                </div>
               </div>
 
               <div
@@ -317,7 +366,7 @@ export function AdicionarProduto() {
                   )}
 
                   <Button onClick={openFileExplorer} variant="outlined">
-                    Abrir explorer
+                    Escoher Imagem
                   </Button>
                 </div>
               </div>

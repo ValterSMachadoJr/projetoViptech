@@ -7,6 +7,7 @@ import {
   CircularProgress,
   IconButton,
   Input,
+  MenuItem,
   Snackbar,
   SvgIcon,
 } from "@mui/material";
@@ -14,12 +15,11 @@ import {
 import { AxiosResponse } from "axios";
 import { NodeAPI } from "services/Service";
 import { ProdutoDTO } from "dtos/ProdutoDTO";
-import Navegacao from "../navegacao";
+
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 export function EditarProduto() {
   const uploadfile: any = useRef();
-  // const navigate = useNavigate(); nao estou retornando para o página home
 
   const [nome, setNome] = useState<string>("");
 
@@ -38,7 +38,9 @@ export function EditarProduto() {
   const [feedbackMessage, setFeedbackMessage] = useState<string>("");
 
   const [messageNameHasError, setMessageNameHasError] = useState<string>("");
-  const [messageValorHasError, setMessageValorHasError] = useState<string>();
+  const [messageValorHasError, setMessageValorHasError] = useState<string>("");
+  const [messageMarcaHasError, setMessageMarcaHasError] = useState<string>("");
+  const [messageCorHasError, setMessageCorHasError] = useState<string>("");
 
   async function EditarprodutoById() {
     const isValidInputs = validateUserInputs();
@@ -66,15 +68,10 @@ export function EditarProduto() {
         setCor("");
         setMarca("");
         setValor(Number(""));
-        //       navigate('/home') voltaria a página home
-
-        //  window.location.replace('/home')
       } catch (error) {
         setFeedbackMessage("Produto não alterado !");
         setSeverity("error");
         setIsOpen(true);
-        console.log();
-        console.log(error);
       }
     }
   }
@@ -89,11 +86,9 @@ export function EditarProduto() {
       setCor(resposta.data.cor);
       setMarca(resposta.data.marca);
       setValor(resposta.data.valor);
-      console.log(resposta);
-      //  setImagem(resposta.data.(`${"data:image/jpeg;base64,"} + ${imagem}`)
+
       setImagem(resposta.data.imagem);
     } catch (erro) {
-      console.log(erro);
     } finally {
       setIsloading(false);
     }
@@ -111,11 +106,18 @@ export function EditarProduto() {
     setMessageValorHasError("");
   }, [valor]);
 
+  useEffect(() => {
+    setMessageMarcaHasError("");
+  }, [marca]);
+
+  useEffect(() => {
+    setMessageCorHasError("");
+  }, [cor]);
+
   function closeSnackbar() {
     setIsOpen(false);
   }
 
-  //botao uploud
   function openFileExplorer() {
     uploadfile.current.click();
   }
@@ -151,6 +153,16 @@ export function EditarProduto() {
 
     if (valor === 0 || valor < 0) {
       setMessageValorHasError("Valor digitado está no formato inválido");
+      isValid = false;
+    }
+    if (marca.length < 4 || marca.length === 0) {
+      setMessageMarcaHasError("Marca digitado está no formato inválido");
+
+      isValid = false;
+    }
+    if (cor.length < 4) {
+      setMessageCorHasError("Cor digitado está no formato inválido");
+
       isValid = false;
     }
 
@@ -254,11 +266,33 @@ export function EditarProduto() {
                 >
                   <TextField
                     value={marca}
-                    label={"Marca"}
-                    variant="outlined"
                     onChange={(event) => setMarca(event.target.value)}
-                    style={{ width: "53%", backgroundColor: "white" }}
-                  />
+                    label="Marca"
+                    variant="outlined"
+                    sx={{
+                      "& .MuiOutlinedInput-root fieldset": {
+                        borderColor:
+                          messageMarcaHasError.length > 0 ? "red" : "grey",
+                      },
+                    }}
+                    style={{ width: "55%", backgroundColor: "white" }}
+                  ></TextField>
+                  <div
+                    style={{
+                      marginTop: "-15px",
+                      marginLeft: "120px",
+                      width: "35%",
+                      display: "flex",
+                      color: "red",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <p>
+                      {messageMarcaHasError.length > 0
+                        ? messageMarcaHasError
+                        : ""}
+                    </p>
+                  </div>
                 </div>
                 <div
                   style={{
@@ -309,12 +343,34 @@ export function EditarProduto() {
                     value={cor}
                     label={"Cor"}
                     variant="outlined"
+                    sx={{
+                      "& .MuiOutlinedInput-root fieldset": {
+                        borderColor:
+                          messageCorHasError.length > 0 ? "red" : "grey",
+                      },
+                    }}
                     onChange={(event) => setCor(event.target.value)}
                     style={{ width: "30%", backgroundColor: "white" }}
                   />
+                  <div
+                    style={{
+                      marginTop: "-15px",
+                      width: "35%",
+                      display: "flex",
+                      color: "red",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <p>
+                      {messageCorHasError.length > 0 ? messageCorHasError : ""}
+                    </p>
+                  </div>
                 </div>
 
                 <div>
+                  <Button onClick={openFileExplorer} variant="outlined">
+                    Escolher Imagem
+                  </Button>
                   <div style={{ width: "100%", height: "150px" }}>
                     <input
                       ref={uploadfile}
@@ -329,9 +385,6 @@ export function EditarProduto() {
                       alt=""
                       style={{ objectFit: "cover" }}
                     />
-                    <Button onClick={openFileExplorer} variant="outlined">
-                      Abrir explorer
-                    </Button>
                   </div>
                 </div>
 

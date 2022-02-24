@@ -8,11 +8,11 @@ export class ProdutoDTO {
   data_cadastro: string;
 
   constructor(
-    nome?: string,
-    cor?: string,
-    marca?: string,
-    valor?: Number,
-    imagem?: string,
+    nome: string,
+    cor: string,
+    marca: string,
+    valor: Number,
+    imagem: string,
     id_produto?: number,
     data_cadastro?: string
   ) {

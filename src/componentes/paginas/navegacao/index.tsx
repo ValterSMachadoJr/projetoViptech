@@ -1,10 +1,5 @@
 import React from "react";
-//import Produto from "../../Produtos/index"
-//import "./home.css"
 import { Link } from "react-router-dom";
-//import Navegacao from "../containernaveg/navegacao"
-
-//import Img_produto from "../../Img_produto"
 
 function Navegacao() {
   return (

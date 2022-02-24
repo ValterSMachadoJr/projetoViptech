@@ -3,23 +3,23 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { NodeAPI } from "services/Service";
 
-// função para calcular as notas
-
 export default function Carrinho() {
-  const uploadfile: any = useRef();
-  // const navigate = useNavigate(); nao estou retornando para o página home
   const [mostrarnotas, setMostrarNotas] = useState<boolean>(false);
-
   const [nome, setNome] = useState<string>("");
   const [cor, setCor] = useState<string>("");
   const [marca, setMarca] = useState<string>("");
   const [valor, setValor] = useState<number>(0);
-  const [texto, setTexto] = useState<string>("");
-
+  const [pagamento, setPagamento] = useState<string>("");
   const [imagem, setImagem] = useState<string>("");
   const [contador, setContador] = useState<number>(1);
-
   const { id_produto } = useParams();
+
+  const CalculaSubTotal = valor * contador;
+  const frete = Number(CalculaSubTotal / 10);
+  const Frete = Number(frete.toFixed(2));
+  const valorTotal = Number(Frete + CalculaSubTotal);
+  const ValorTotal = Number(valorTotal.toFixed(2));
+  const calculaSubTotalDuascasas = CalculaSubTotal.toFixed(2);
 
   async function getProdutoById() {
     try {
@@ -30,23 +30,11 @@ export default function Carrinho() {
       setCor(resposta.data.cor);
       setMarca(resposta.data.marca);
       setValor(resposta.data.valor);
-      console.log(resposta);
-      //  setImagem(resposta.data.(`${"data:image/jpeg;base64,"} + ${imagem}`)
       setImagem(resposta.data.imagem);
     } catch (erro) {
       console.log(erro);
     }
   }
-  const CalculaSubTotal = valor * contador;
-  console.log(CalculaSubTotal);
-
-  const frete = Number(CalculaSubTotal / 10);
-  const Frete = Number(frete.toFixed(2));
-
-  const valorTotal = Number(Frete + CalculaSubTotal);
-
-  const ValorTotal = Number(valorTotal.toFixed(2));
-  const calculaSubTotalDuascasas = CalculaSubTotal.toFixed(2);
 
   useEffect(() => {
     getProdutoById();
@@ -55,17 +43,17 @@ export default function Carrinho() {
   function calculaNotas(valor: number) {
     setMostrarNotas(true);
     var notas = [100, 50, 10, 5, 1];
-    var texto = "";
+    var mensagem = "";
     for (var x = 0; x < notas.length; x++) {
       if (valor >= notas[x]) {
         var div = Math.floor(valor / notas[x]);
-        texto += div + "  Nota(s) de: " + notas[x] + "  \n  " + " / ";
+        mensagem += div + "  Nota(s) de: " + notas[x] + "  \n  " + "  \n  ";
         valor -= div * notas[x];
       }
     }
-    setTexto(texto);
-    console.log(texto);
-    return texto;
+    setPagamento(mensagem);
+
+    return mensagem;
   }
 
   return (
@@ -185,12 +173,11 @@ export default function Carrinho() {
 
                 <div
                   style={{
-                    backgroundColor: "yellow",
                     width: "124px",
                     height: "28px",
                   }}
                 >
-                  <span>{valor}</span>
+                  <h4>{valor}</h4>
                 </div>
               </div>
             </div>
@@ -269,7 +256,7 @@ export default function Carrinho() {
                 justifyContent: "center",
               }}
             >
-              <h3>{texto}</h3>
+              <h3>{pagamento}</h3>
             </div>
           )}
         </div>
